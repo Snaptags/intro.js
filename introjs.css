@@ -9,7 +9,7 @@
   background: -o-radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
   background: -ms-radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
   background: radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000',endColorstr='#e6000000',GradientType=1);
+  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000',endColorstr='#e6000000',GradientType=1)";
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: alpha(opacity=50);
   -webkit-transition: all 0.3s ease-out;
@@ -39,6 +39,9 @@ tr.introjs-showElement > th {
 .introjs-disableInteraction {
   z-index: 99999999 !important;
   position: absolute;
+  background-color: white;
+  opacity: 0;
+  filter: alpha(opacity=0);
 }
 
 .introjs-relativePosition,
@@ -110,8 +113,8 @@ tr.introjs-showElement > th {
   line-height: 20px;
   border: 3px solid white;
   border-radius: 50%;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3019', endColorstr='#cf0404', GradientType=0); /* IE6-9 */
-  filter: progid:DXImageTransform.Microsoft.Shadow(direction=135, strength=2, color=ff0000); /* IE10 text shadows */
+  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3019', endColorstr='#cf0404', GradientType=0)"; /* IE6-9 */
+  filter: "progid:DXImageTransform.Microsoft.Shadow(direction=135, strength=2, color=ff0000)"; /* IE10 text shadows */
   box-shadow: 0 2px 5px rgba(0,0,0,.4);
 }
 
@@ -354,8 +357,12 @@ tr.introjs-showElement > th {
   background: transparent;
   width: 20px;
   height: 15px;
+  cursor: pointer;
 }
-
+.introjs-hint:focus {
+    border: 0;
+    outline: 0;
+}
 .introjs-hidehint {
   display: none;
 }
@@ -384,7 +391,11 @@ tr.introjs-showElement > th {
        -o-transition: all 0.2s ease-out;
           transition: all 0.2s ease-out;
 }
-
+.introjs-hint-no-anim .introjs-hint-dot {
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none;
+}
 .introjs-hint-dot {
   border: 10px solid rgba(146, 146, 146, 0.36);
   background: transparent;
