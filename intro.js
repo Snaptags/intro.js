@@ -1,5 +1,5 @@
 /**
- * Intro.js v2.2.0
+ * Intro.js v2.3.0
  * https://github.com/usablica/intro.js
  *
  * Copyright (C) 2016 Afshin Mehrabani (@afshinmeh)
@@ -18,7 +18,7 @@
   }
 } (this, function (exports) {
   //Default config/variables
-  var VERSION = '2.2.0';
+  var VERSION = '2.3.0';
 
   /**
    * IntroJs main class
@@ -38,6 +38,10 @@
       skipLabel: 'Skip',
       /* Done button label in tooltip box */
       doneLabel: 'Done',
+      /* Hide previous button in the first step? Otherwise, it will be disabled button. */
+      hidePrev: false,
+      /* Hide next button in the last step? Otherwise, it will be disabled button. */
+      hideNext: false,
       /* Default tooltip box position */
       tooltipPosition: 'bottom',
       /* Next CSS class for tooltip boxes */
@@ -1009,14 +1013,28 @@
     nextTooltipButton.removeAttribute('tabIndex');
 
     if (this._currentStep == 0 && this._introItems.length > 1) {
-      prevTooltipButton.className = 'introjs-button introjs-prevbutton introjs-disabled';
-      prevTooltipButton.tabIndex = '-1';
       nextTooltipButton.className = 'introjs-button introjs-nextbutton';
+
+      if (this._options.hidePrev == true) {
+        prevTooltipButton.className = 'introjs-button introjs-prevbutton introjs-hidden';
+        nextTooltipButton.className += ' introjs-fullbutton';
+      } else {
+        prevTooltipButton.className = 'introjs-button introjs-prevbutton introjs-disabled';
+      }
+
+      prevTooltipButton.tabIndex = '-1';
       skipTooltipButton.innerHTML = this._options.skipLabel;
     } else if (this._introItems.length - 1 == this._currentStep || this._introItems.length == 1) {
       skipTooltipButton.innerHTML = this._options.doneLabel;
       prevTooltipButton.className = 'introjs-button introjs-prevbutton';
-      nextTooltipButton.className = 'introjs-button introjs-nextbutton introjs-disabled';
+
+      if (this._options.hideNext == true) {
+        nextTooltipButton.className = 'introjs-button introjs-nextbutton introjs-hidden';
+        prevTooltipButton.className += ' introjs-fullbutton';
+      } else {
+        nextTooltipButton.className = 'introjs-button introjs-nextbutton introjs-disabled';
+      }
+
       nextTooltipButton.tabIndex = '-1';
     } else {
       prevTooltipButton.className = 'introjs-button introjs-prevbutton';
@@ -1040,9 +1058,9 @@
 
     var parentElm = targetElement.element.parentNode;
     while (parentElm != null) {
-      if (parentElm.tagName.toLowerCase() === 'body') break;
+      if (!parentElm.tagName || parentElm.tagName.toLowerCase() === 'body') break;
 
-      //fix The Stacking Contenxt problem.
+      //fix The Stacking Context problem.
       //More detail: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
       var zIndex = _getPropValue(parentElm, 'z-index');
       var opacity = parseFloat(_getPropValue(parentElm, 'opacity'));
@@ -1112,7 +1130,7 @@
   function _isFixed (element) {
     var p = element.parentNode;
 
-    if (p.nodeName === 'HTML') {
+    if (!p || p.nodeName === 'HTML') {
       return false;
     }
 
@@ -1175,7 +1193,7 @@
     overlayLayer.className = 'introjs-overlay';
 
     //check if the target element is body, we should calculate the size of overlay layer in a better way
-    if (targetElm.tagName.toLowerCase() === 'body') {
+    if (!targetElm.tagName || targetElm.tagName.toLowerCase() === 'body') {
       styleText += 'top: 0;bottom: 0; left: 0;right: 0;position: fixed;';
       overlayLayer.setAttribute('style', styleText);
     } else {

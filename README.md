@@ -1,4 +1,4 @@
-# Intro.js v2.2.0
+# Intro.js v2.3.0
 
 > Better introductions for websites and features with a step-by-step guide for your projects.
 
@@ -87,6 +87,11 @@ Here is a under construction plugin for Wordpress: https://github.com/newoldmedi
 GWT wrapper on top of Intro.js
 
 Github: https://github.com/Agnie-Software/gwt-introjs
+
+### R Wrapper
+You can use IntroJs with [R](https://cran.r-project.org/) for [Shiny applications](http://shiny.rstudio.com/) with the [rintrojs package on CRAN](https://cran.r-project.org/web/packages/rintrojs/).
+
+Github: https://github.com/carlganz/rintrojs
 
 ## Build
 
